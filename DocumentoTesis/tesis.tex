@@ -1,0 +1,132 @@
+\documentclass[12pt]{report}
+\input{core/preambulo.tex}
+\input{core/glosario.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nombreautor}{Lucas Moyano}
+\newcommand{\mes}{Mes}
+\newcommand{\anio}{Año}
+\newcommand{\titulo}{Sobre el rol de la inatención racional en inversiones con criterios ASG ante cambios regulatorios}
+\newcommand{\nombreprofuno}{Nombre Profe 1}
+\newcommand{\nombreprofdos}{Nombre Profe 2}
+\newcommand{\nombreproftres}{Nombre Profesor Invitado}
+\newcommand{\codigo}{ING-IN-XXX/XX}
+
+%%%%%%%%%%Aqui se escribe el resumen%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\dedicatoria}{
+En esta sección se deben incluir, de ser necesario, los agradecimientos personales a familiares, colegas, etc. (Máximo 1 página)
+ }
+
+\newcommand{\resumen}{
+En esta sección se debe incluir un resumen de los principales aspectos desarrollados en la tesis, justificación, metodología y principales resultados. (Máximo 1 página). 
+
+\vspace{5cm}
+
+{\color{blue}
+
+El siguiente documento no puede ser la copia del escrito del o los art\'{\i}culos publicados (si corresponde).
+Estos deben ser incluidos como Ap\'endices al final de la tesis.
+
+\vspace{1cm}
+
+Los m\'argenes son 2.5 cm superior e inferior, y 3 cm derecha e izquierda, en todo el documento.
+
+\vspace{1cm}
+
+Se debe mantener el formato tipo de letra Times New Roman, tama\~no 12 e interlineado 1.5 l\'{\i}neas.
+}
+}
+
+\newcommand{\resumenIngles}{
+En esta sección se debe incluir un resumen en Inglés de los principales aspectos desarrollados en la tesis, justificación, metodología y principales resultados. (Máximo 1 página).}
+
+
+\newcommand{\agradecimientos}{
+En esta sección, se deben incluir los agradecimientos en primer lugar a las fuentes de financiamiento de las tesis, si las hubiera y posteriormente a los académicos involucrados en el desarrollo de la investigación. (Máximo 1 página). 
+}
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Por favor coloque todas las definiciones de simbolos a continuacion
+% y no en los archivos de capitulos. Esto evitara la  existencia de
+% multiples definiciones para las mismas palabras.
+
+\newcommand{\mydef}
+	{\stackrel{\mathrm{def}}{=}}
+\newcommand{\e}
+	{\hbox{\large{e}}}
+\newcommand{\mi}
+	{\hbox{\large{i}}}
+\newcommand{\RR}{\mathbb{R}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\label{start}
+
+% Genera las paginas de titulo, copyright, resumen,
+% agradecimientos, dedicatoria, indices,...
+
+% No es necesario modificar
+
+\input{core/primeras_paginas.tex}
+
+%%%%%%%%%%%%%%%%Ingreso de capitulos%%%%%%%%%%%%%%%%%%%%%%
+
+% espaciado similar a Word 1.5
+\spacing{1.4}
+
+\input{chapters/chapter01.tex} % Intro
+\input{chapters/chapter02.tex} % Rev. biblio
+\input{chapters/chapter03.tex} % Metodología
+\input{chapters/chapter04.tex} % Resultados
+\input{chapters/chapter05.tex} % Conclusiones
+
+\cleardoublepage
+
+\addcontentsline{toc}{chapter}{Nomenclatura}
+\chapter*{Nomenclatura}
+%\addcontentsline{toc}{chapter}{Nomenclatura}
+
+%\printglossary[type=\acronymtype]
+%\printglossary[title=Special Terms, toctitle=Nomenclatura]
+
+GCD: greatest common divisor
+
+% Ingenieros prefieren la bibliografia antes que los anexos
+
+\cleardoublepage
+
+\addcontentsline{toc}{chapter}{Referencias}
+{\color{blue} En esta sección de debe incluir todas las referencias utilizadas en la tesis. Se debe evitar el uso de páginas web o fuentes no formales de información. (Máximo 15 páginas)
+
+\vspace{0.5cm}
+
+Sobre el formato de citas, se debe usar el formato APA, esto es: ``Según datos de Fernández (1999), un 110\% de los conductores no alcanza a frenar... En otro estudio del mismo autor (Fernández, 2000) se establece... Otras investigaciones (Fernández y Vergara, 2000) concluyen además... El trabajo de Fernández et al. (2001) confirma que...''
+
+\vspace{0.5cm}
+
+Para mayor información consultar: \url{https://uandes.libguides.com/citasyreferencias} 
+}
+\bibliographystyle{newapa}
+\bibliography{bibliografia}
+
+\appendix % seguido de archivos de apendices
+
+\cleardoublepage
+
+% Escribe 'Anexos' en el Indice General
+\addcontentsline{toc}{chapter}{Anexos}
+
+
+\input{attachments/anexo_a.tex}    % archivo de apendice
+
+% \input{ruta_al_Archivo/(apendice_b}    % otro archivo de apendice
+
+\label{end}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
