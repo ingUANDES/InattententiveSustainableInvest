@@ -1,0 +1,13 @@
+---
+title: "Readme"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Organización Repositorio
+
+- Documento Tesis: `DocumentoTesis/tesis.text`
+- Presentación: `Pres/home.qmd`

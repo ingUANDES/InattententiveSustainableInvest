@@ -1,0 +1,16 @@
+---
+title: "On the role of Rational Inattention for Sustainable Investment under regulations' changes"
+format: revealjs
+editor: visual
+bibliography: ../DocumentoTesis/bibliografia.bib
+---
+
+## Topics
+
+Enunciar tópicos de la revisión de @pastor_sustainable_2021
+
+-   Topic 1
+
+-   Topic 2
+
+## References
