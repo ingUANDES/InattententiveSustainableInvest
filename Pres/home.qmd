@@ -1,5 +1,5 @@
 ---
-title: "On the role of Rational Inattention for Sustainable Investment under regulations' changes"
+title: "Exploring the Role of Rational Inattention in Sustainable Investment Amidst Regulatory Shifts"
 format: revealjs
 editor: visual
 bibliography: ../DocumentoTesis/bibliografia.bib
