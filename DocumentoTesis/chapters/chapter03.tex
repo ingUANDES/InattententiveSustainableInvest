@@ -5,9 +5,11 @@
 
 {\color{blue} En esta sección de debe incluir el diseño experimental y metodología general del trabajo que fueron utilizados, su explicación, así como el detalle de los materiales, equipos y metodologías teóricas y experimentales utilizadas. (Máximo 15 páginas). }
 
+El objetivo de este estudio es desarrollar un nuevo enfoque que incluya las funciones de utilidad de los inversores, las cuales están condicionadas por un rendimiento financiero considerando factores ASG.  Siguiendo la línea de investigación de \cite{pastor_sustainable_2021}, se busca incorporar los hallazgos previos de \cite{heinke_rational_2016}, así como los de \cite{pedersen_responsible_2021}, en relación con la adquisición de información acerca de los rendimientos ASG, tomando en consideración la noción de inatención racional.
+
 \section{Un modelo de varios activos y retornos ESG}
 
-Sigamos el modelo de \citeB{pastor_sustainable_2020}, donde se tienen $N$ firmas con un retorno sobre el retorno del activo libre de riesgo $r_f$ denotado por $\tilde r_n$ para cada $n=1,...,N$. El vector de retornos de todo el modelo se puede escribir de la siguiente forma
+Sigamos el modelo de \citeA{pastor_sustainable_2021}, donde se tienen $N$ firmas con un retorno sobre el retorno del activo libre de riesgo $r_f$ denotado por $\tilde r_n$ para cada $n=1,...,N$. El vector de retornos de todo el modelo se puede escribir de la siguiente forma
 
 $$\tilde r=(\tilde r_1,...,\tilde r_N)=(\mu_1,...,\mu_N)+(\tilde\epsilon_1,...,\tilde\epsilon_N)=\mu+\tilde\epsilon.$$
 
@@ -15,67 +17,182 @@ Esto quiere decir que la firma $n$ tiene un retorno mañana igual a $\tilde r_n=
 
 Pregunta: Si cada valor de $\tilde\epsilon_n$ posible refleja un estado de la naturaleza y existe una cantidad $S>0$ de estados posibles: ¿Cómo se puede escribir el vector de retornos de los activos $R_n=(R_n(1),...,R_n(S))$?\\
 
-El vector de retornos de los activos $R_n=(R_n(1),...,R_n(S))$ se escribiría:
+El vector de retornos de los activos $R_n=(R_n(1),...,R_n(S))$ se escribiría de acuerdo a la siguiente ecuación (\ref{eq:Rn}):
 
-$$R_n=(\mu_1 + \tilde\epsilon_1,...,\mu_N + \tilde\epsilon_N)$$
+\begin{eqnarray}
+R_n&=&(\mu_1 + \tilde\epsilon_1,...,\mu_N + \tilde\epsilon_N)\label{eq:Rn}
+%\\
+%&\text{otra línea}&\nonumber
+\end{eqnarray}
 
-Continuar detalle del modelo hasta 
+Además de los beneficios pecuniarios, las empresas también entregan un beneficio al impacto social. Cada empresa $n$, tiene una característica ASG, la cual es capturada por $g_n$, siendo para empresas ``verdes'' positiva si tienen externalidades positivas y para empresas ``cafés'' negativa si tienen externalidades negativas.\\
 
-$$w_m=\int_i\omega_iX_idi$$
+También existe un continuo de agentes los cuales comercian con las acciones de las empresas y el activo libre de riesgo. Denotemos por $X_i$ a un vector de $N x 1$ cuyo elemento n-ésimo es la fracción de la riqueza del agente $i$ invertida en el activo $n$. La riqueza del agente $i$ en el segundo periodo ($t = 1$) es:
+
+$$W_{1i}=W_{0i}(1 + r_f + X_i' \tilde r)$$
+
+donde $W_{0i}$ representa la riqueza inicial del agente i (es decir, en $t=0$). Además de su riqueza, los agentes obtienen una utilidad (valoración subjetiva de la riqueza) dependiendo si utilizan acciones ``verdes'' o ``cafés''. Cada agente i tiene una utilidad exponencial:
+
+$$V(\tilde W_{1i}, X_i)=-e^{-A_i\tilde W_{1i}-b_i'X_i}=-\exp\left(-A_i\tilde W_{1i}-b_i'X_i\right)$$
+
+Donde $A_i$ es la aversión al riesgo que tiene el agente $i$ y $b_i$ es un vector $N \cdot 1$ de beneficios otorgados por ASG que el agente obtiene gracias a la tenencia de esas acciones. El vector de beneficios tiene componentes específicos para cada agente y empresa:
+
+$$b_i=d_ig$$
+
+Donde $g$ es un vector en $\mathbb{R}^N$ cuyo elemento n-ésimo es $g_n$ y $d_i \geq 0$ es un escalar el cual mide el grado de ``gusto'' que tiene el agente $i$ por los activos ASG. 
+
+En este modelo, los agentes al momento de elegir sus carteras óptimas en $t=0$, consideran los precios de los activos, y la distribución de sus rendimientos como dados. Con tal de obtener la derivada de primer orden para $X_i$, y de esta manera conocer los pesos del portafolio del agente i, se calcula la esperanza de la utilidad (ecuación de mas arriba) Además, recordando que $\tilde r$ distribuye normal, $\tilde r \sim N(\mu, \Sigma)$ Se obtiene que:
+
+\begin{eqnarray}
+ E\left\lbrace V(\tilde W_{1i}, X_i) \right\rbrace &=& E\left\lbrace-e^{-A_i\tilde W_{1i}-b_i'X_i} \right\rbrace\nonumber\\
+ &=& E\left\lbrace-e^{-A_i\left[W_{0i}(1 + r_f + X_i' \tilde r)\right]-b_i'X_i} \right\rbrace\nonumber\\
+ &=& -e^{-a_i(1+r_f)}E\left\lbrace e^{-a_iX_i'\left[\tilde r + \frac{1}{a_i}b_i)\right]}\right\rbrace\nonumber\\
+ &=& -e^{-a_i(1+r_f)} e^{-a_iX_i'\left[E(\tilde r)+\frac{1}{a_i}b_i\right]+\frac{1}{2}a_i^{2}X_i'Var(\tilde r)X_i}\nonumber\\
+ &=& -e^{-a_i(1+r_f)} e^{-a_iX_i'\left[\mu+\frac{1}{a_i}b_i\right]+\frac{1}{2}a_i^{2}X_i'\Sigma X_i}
+\end{eqnarray}
+
+Donde $a_i \equiv A_iW_{01}$ es la aversión al riesgo relativo del agente $i$. Teniendo $\mu$ y $\Sigma$ como dados. Se deriva con respecto a $X_i$, obteniendo la condición de primer orden:
+
+\begin{eqnarray}
+-a_i\left[\mu + \frac{1}{a_i}b_i\right]+\frac{1}{2}a_i^{2}(2\Sigma X_i) = 0
+\end{eqnarray}
+Donde se obtienen los pesos de la cartera del agente $i$
+\begin{eqnarray}
+X_i=\frac{1}{a_i} \Sigma^{-1}\left(\mu + \frac{1}{a_i} b_i\right)
+\end{eqnarray}
+
+Siendo, $a_i = A_iW_{0i}$ la aversión al riesgo del agente i. Luego, se define $\omega_i$ como la proporción de la riqueza inicial del agente i con respecto a la riqueza total inicial del mercado: $\omega_i \equiv W_{0i}/W_0$, donde $W_0 + \int_i\omega_iW_{0i}di$. Debido a que \citeA{pastor_sustainable_2021}, asume una posición agregada cero en el activo sin riesgo, el equilibrio de mercado requiere que $w_m$, que es el vector $N x 1$ de ponderaciones de la cartera de mercado de activos, cumpla con las siguientes condiciones:
+
+\begin{eqnarray}
+ w_m&=&\int_i\omega_iX_idi\nonumber\\
+&=& \frac{1}{a_i} \Sigma^{-1}\mu+ \frac{\bar d}{a^2} \Sigma^{-1}g  
+\end{eqnarray}
+
+Donde $\bar d \equiv \int_i\omega_i d_idi \geq 0$  es la media ponderada por riqueza de los gustos ASG $d_i$ entre todos los agentes.
+
+\section{El factor ASG}
+
+Con tal de poder obtener información sobre el rendimiento ex-post frente al rendimiento ex-ante de las acciones ``verdes'' frente a las ``cafés'', se introduce un factor ASG, el cual es empíricamente identificable, además de que esta estrechamente relacionado con las cartera ASG, manteniendo la fijación de precios de dos factores. Se define el factor ASG como:
+
+$$\tilde f_g = \left(\frac{1}{g_g}\right)\tilde{r}_g$$
+
+Donde $\tilde f_g$ es el rendimiento excedente de una cartera con componente ASG, según el signo y el valor de $g_g$.
+
+Definiendo el vector de betas con respecto a $\tilde r_g$ como:
+
+$$\beta_g = 1/g_g g$$
+
+Y los rendimientos excedentes de dos factores según la regresión:
+
+$$\tilde{r} = \beta_m\tilde{r}_m + \beta_g\tilde{r}_g + \tilde{v}$$
+
+Podemos reescribir el modelo de la siguiente manera:
+$$\tilde{r} = \beta_m\tilde{r}_m + g \tilde{f}_g + \tilde{v}$$
+
+De tal forma que las ponderaciones de los activos en el factor ASG y sus betas ASG, son simplemente sus características ASG, $g$. Por lo que un cumplimiento mas alto de los esperado de $\tilde f_g$ impulsa los rendimientos de las acciones ``verdes'' y deprime los ``cafés''.
+
+\section{Cambios en Precios de Activos por Falta de Atención en la Regulación}
+
+Con tal de poder explicar y modelar la inatención que tienen los inversores con una noticia ASG, primero se explicara como el flujo de información de aquella señal llega al receptor. \cite{heinke_rational_2016} modelan una economía con $N$ activos y el flujo de los dividendos de cada activo como $n \epsilon N$, siguiendo un proceso estocástico con una media determinista $\mu_n$ y una varianza $\sigma^{2}_n$. Por lo tanto, el flujo de dividendos se puede describir como: 
+
+$$d_{n,t} = \mu_n + \sigma_n \epsilon_{n,t}$$
+
+Donde $\epsilon_{n,t} \sim \mathcal{N}(0, 1)$ representa la variable aleatoria la cual distribuye normal, con media 0 y varianza 1. Acá se presenta el concepto de generaciones traslapadas, donde en cada periodo $t$, la generación anterior $t-1$ ya se encuentra en la economía poseyendo los activos y una generación $t$ nace, compuesta por una serie de agentes idénticos distribuidos de manera uniforme en el intervalo unitario con una masa poblacional constante de 1. De esta forma, los agente de la generación $t$ pueden comprar el activo y ganar el dividendo, que se destinara a su consumo después de pagar por los activos. Para el periodo $t+1$, la generación $t$ vende el activo y consume el efectivo recibido. Por lo que, poseer un activo significaría ahorrar para el consumo en el siguiente periodo. Con tal de poder diseñar como llega esa noticia al agente, se modela la estructura de señal de un activo $n$ en el periodo $t$ que el agente $i$ elige observar, tomando en conjunto todas las posibles estructuras de señal $\Gamma$ y consta de los futuros dividendos obtenibles, mas un ruido $ \tilde\sigma^{i}_n \psi^{i}_{nt}$, donde $\tilde\sigma^{i}_n$ en el componente que mide el nivel de ruido de la noticia y $\psi^{i}_{nt}$ sigue una distribución normal con media 0 y varianza 1. Con esto, se puede modelar la precisión de la señal, la cual es una función de la cantidad de información contenida en la señal, medida por la información mutua promedio que la señal contiene sobre el dividendo. Debido a que el agente $i$ no tiene una capacidad infinita de procesamiento de información, existe un limite superior $k^{i}$ en la cantidad de información procesada $I(.)$. De esta forma se modela la ecuación de procesamiento de la información de acuerdo a una señal de la siguiente forma:
+
+$$S^{i}_{n,t} = \mu_n + \sigma_n\epsilon_{nt} + \tilde\sigma^{i}_n \psi^{i}_{nt}$$
+
+Donde $S^{i}_{n,t}$ es el vector de todas las señales elegidas por el agente $i$.
+
+Además, se añade la siguiente restricción de capacidad de información procesada por el individuo $i$:
+
+$$I (d_t; s^i_t) \leq \kappa^i $$
+
+Donde $d_t$ es el vector de los procesos estocásticos de todos los dividendos
+También se especifica la tasa de sustitución intertemporal del agente dada por $\beta$.
+
+De esta forma, se puede modelar el problema de decisión de dos estados del agente de la siguiente forma.
+
+$$\max_{s_t^i \in \Gamma} E [u(c_t^i; s_t^i) + \beta u(c_{t+1}^i; s_t^i) | s_t^i]$$
+
+Sujetos a las siguientes restricciones:
+
+$$I (d_t; s^i_t) \leq \kappa^i $$
+$$ q^{i*}_{t+1} = \arg \max_{q_{t+1}^i} E [u(c_t^i; s_t^i) + \beta u(c_{t+1}^i; s_t^i) | s_t^i]$$
+$$C^{i}_t = q^{i*}_{t+1} (d_t - p_t)$$
+$$C^{i}_{t+1} = q^{i*}_{t+1} p_{t+1}$$
+
+En el primer estado, se modela la decisión del agente sobre la estructura de señal que quiere recibir (4), en base a su capacidad de poder recibir información (5). En el segundo estado, el decide su estrategia de negociación (6) de acuerdo a la señal recibida por la estructura elegida y sus restricciones presupuestarias (7) y (8).
+
+Con lo anterior modelado, se quiere llevar la siguiente función objetivo:
+
+$$\max_{s_t^i \in \Gamma} E [u(c_t^i; s_t^i) | s_t^i]$$
+
+Donde la ecuación de utilidad este diseñado según lo modelado en \cite{pastor_sustainable_2021}, donde se modela la utilidad esperada del agente $i$ según la relación $W_{1i}=W_{0i}(1 + r_f + X_i' \tilde r)$, con $r$ siguiendo una distribución normal, de tal forma que: 
+
+$$E{V(\tilde W_{1i}, X_i)} = E { -e^{-A_i\tilde W_{1i}-b_i'X_i}} =-\exp\left(-A_i\tilde W_{1i}-b_i'X_i\right) $$
+
+Con esto modelo se plantean dos preguntas:
+
+\begin{enumerate}
+    \item ¿La señal en el modelo de Heinke y Warmuth, entrega información sobre retorno pecuniario?
+    \item ¿La función objetivo propuesta, entregaría información sobre retorno pecuniario y retorno ASG?
+\end{enumerate}
+
+Con esto, también cabe recalcar las similitudes y diferencias que estos dos modelos presentan. Ambos presentan un modelo continuo de agentes. \cite{heinke_rational_2016} presenta en su modelo un consumo intertemporal, mientras que Pastor no. ( y dos mas que no se leen el foto que saque)
 
 \newpage
-EJEMPLO:
+%EJEMPLO:
 
-Aunque $M1$ es un modelo fácil de entender, es bastante difícil de manejar con solvers tradicionales, puesto que es un problema muy no lineal. Alternativamente, se puede definir fácilmente una ecuación de Bellman para $M1$, considerando que es un proceso de decisión secuencial [Nemhauser y Wolsey, 2014]. Aún así, esto podría ser dificultoso para resolver con instancias de gran tamaño (incluso de tamaño mediano), debido a la maldición de la dimensionalidad. No obstante, se propone una transformación preliminar de $M1$ a un modelo de Programación Lineal Entero Mixto (MILP) $M2$, el cual es matemáticamente equivalente y que mantiene los mismos parámetros y se agrega un nuevo grupo de variables binarias. Sea $x_{it} = 1$ si se concede el préstamo al consumidor $i \in I$ en el periodo $t \in \{1,...,T\}$, 0 en otro caso.  \\
+%Aunque $M1$ es un modelo fácil de entender, es bastante difícil de manejar con solvers tradicionales, puesto que es un problema muy no lineal. Alternativamente, se puede definir fácilmente una ecuación de Bellman para $M1$, considerando que es un proceso de decisión secuencial [Nemhauser y Wolsey, 2014]. Aún así, esto podría ser dificultoso para resolver con instancias de gran tamaño (incluso de tamaño mediano), debido a la maldición de la dimensionalidad. No obstante, se propone una transformación preliminar de $M1$ a un modelo de Programación Lineal Entero Mixto (MILP) $M2$, el cual es matemáticamente equivalente y que mantiene los mismos parámetros y se agrega un nuevo grupo de variables binarias. Sea $x_{it} = 1$ si se concede el préstamo al consumidor $i \in I$ en el periodo $t \in \{1,...,T\}$, 0 en otro caso.  \\
 
 
-$$ \begin{array}{r l l}
-	\displaystyle\max_{\vb{x}, \tau, \vb{s}} & z(\vb{x}, \tau, \vb{s}) &   									\\
-	\text{s.t.}&  s_{t-1} - s_{t} + \gamma_{t} - \displaystyle\sum_{i \in I} a_{it} x_{it} = 0	& \forall t \in \{1,...,T\}		\\
-					&  s_{0} = B & 	                                                                                         	\\
-					& x_{it} \leq \dfrac{\tau_{t}}{Pod_{it}} & \forall i \in I , \text{  } \forall t \in \{1,...,T\}                 \\
-					& x_{it} \in \{0, 1\} & \forall i \in I , \text{  }  \forall t \in \{1,...,T\}                                    \\
-					& \tau_{t} \in \left[0,1 \right] , s_{t} \geq 0 & \forall t \in \{1,...,T\}                                            \\
+%$$ \begin{array}{r l l}
+	%\displaystyle\max_{\vb{x}, \tau, \vb{s}} & z(\vb{x}, \tau, \vb{s}) &   									\\
+	%\text{s.t.}&  s_{t-1} - s_{t} + \gamma_{t} - \displaystyle\sum_{i \in I} a_{it} x_{it} = 0	& \forall t \in \{1,...,T\}		\\
+					%&  s_{0} = B & 	                                                                                         	\\
+					%& x_{it} \leq \dfrac{\tau_{t}}{Pod_{it}} & \forall i \in I , \text{  } \forall t \in \{1,...,T\}                 \\
+					%& x_{it} \in \{0, 1\} & \forall i \in I , \text{  }  \forall t \in \{1,...,T\}                                    \\
+					%& \tau_{t} \in \left[0,1 \right] , s_{t} \geq 0 & \forall t \in \{1,...,T\}                                            \\
 					
-\end{array} $$
+%\end{array} $$
 
 %\newpage
 
-\[ z(\vb{x}, \tau, \vb{s}) = \begin{cases} z_1(\vb{x}, \tau, \vb{s}) = \sum_{t=1}^{T}\left(- \alpha\tau_t + \sum_{i \in I} a_{it} x_{it}\right) & \text{Si la IF es con fines de lucro} \\ z_2(\vb{x}, \tau, \vb{s}) = \sum_{t=1}^{T} \left(- \alpha\tau_t + \sum_{i \in I} x_{it}\right) & \text{Si la IF es sin fines de lucro} \end{cases} \] \\
+%\[ z(\vb{x}, \tau, \vb{s}) = \begin{cases} z_1(\vb{x}, \tau, \vb{s}) = \sum_{t=1}^{T}\left(- \alpha\tau_t + \sum_{i \in I} a_{it} x_{it}\right) & \text{Si la IF es con fines de lucro} \\ z_2(\vb{x}, \tau, \vb{s}) = \sum_{t=1}^{T} \left(- \alpha\tau_t + \sum_{i \in I} x_{it}\right) & \text{Si la IF es sin fines de lucro} \end{cases} \] \\
 
-$M2$ es un MILP; por lo tanto, se espera que solvers como Gurobi, Cplex o SCIP (entre otros) puedan manejarlo para instancias grandes. En particular, se resolverá usando SCIP en combinación con Python. Para la solución de este problema, se utilizará el conjunto de datos de Bravo et al. [2013], que tiene miles de prestatarios que solicitan préstamos en un tiempo determinado. \\
+%$M2$ es un MILP; por lo tanto, se espera que solvers como Gurobi, Cplex o SCIP (entre otros) puedan manejarlo para instancias grandes. En particular, se resolverá usando SCIP en combinación con Python. Para la solución de este problema, se utilizará el conjunto de datos de Bravo et al. [2013], que tiene miles de prestatarios que solicitan préstamos en un tiempo determinado. \\
 
-Sin embargo, $M2$ asume que la cantidad de clientes que llegan a solicitar un préstamo y la montos solicitados son conocidos, luego se propone un nuevo modelo con parámetros estocásticos.
+%Sin embargo, $M2$ asume que la cantidad de clientes que llegan a solicitar un préstamo y la montos solicitados son conocidos, luego se propone un nuevo modelo con parámetros estocásticos.
 
-\section{Modelo $M3$: Modelo con el número de clientes como variable aleatoria}
+%\section{Modelo $M3$: Modelo con el número de clientes como variable aleatoria}
 
-En $M1$ y $M2$ definimos la demanda como un parámetro, indicando el número de prestatarios $|I|$ y los montos solicitados $a_{it}$, pero ahora en este modelo $M3$ se definirán como esta cantidad de clientes como una variable aleatoria y los montos solicitados como un parámetro estocástico. \\
+%En $M1$ y $M2$ definimos la demanda como un parámetro, indicando el número de prestatarios $|I|$ y los montos solicitados $a_{it}$, pero ahora en este modelo $M3$ se definirán como esta cantidad de clientes como una variable aleatoria y los montos solicitados como un parámetro estocástico. \\
 
-Se asume que en un periodo $t \in \{1,...,T\}$, los escenarios $k \in \{1,...,K\}$ representan rangos de probabilidad de default en orden incremental. Por lo tanto, si $k_1, k_2 \in \{1,...,K\}$ son tales que $k_1 < k_2$, entonces $pod^{k_1}< pod^{k_2}$. El número de clientes que llegan a solicitar un préstamo es ahora $m_{t}^{k}$ y los montos solicitados por cada prestatario del rango $k$ es $a_{t}^{k}$. Notemos, una vez que un prestatario solicita un préstamo, la IF puede estimar sus probabilidades de default. Se pueden aplicar los procesos estándar de estimación de PD definidos por Baesens et al. [2017b] y Thomas [2009].
+%Se asume que en un periodo $t \in \{1,...,T\}$, los escenarios $k \in \{1,...,K\}$ representan rangos de probabilidad de default en orden incremental. Por lo tanto, si $k_1, k_2 \in \{1,...,K\}$ son tales que $k_1 < k_2$, entonces $pod^{k_1}< pod^{k_2}$. El número de clientes que llegan a solicitar un préstamo es ahora $m_{t}^{k}$ y los montos solicitados por cada prestatario del rango $k$ es $a_{t}^{k}$. Notemos, una vez que un prestatario solicita un préstamo, la IF puede estimar sus probabilidades de default. Se pueden aplicar los procesos estándar de estimación de PD definidos por Baesens et al. [2017b] y Thomas [2009].
 
-Sea $x_{t}^{k} = 1$ si se concede préstamos a los consumidores que pertenecen al rango $k \in \{1,...,K\}$ en el periodo $t \in \{1,\cdots,T\}$, 0 en otro caso. 
+%Sea $x_{t}^{k} = 1$ si se concede préstamos a los consumidores que pertenecen al rango $k \in \{1,...,K\}$ en el periodo $t \in \{1,\cdots,T\}$, 0 en otro caso. 
 
-Luego notemos que $x_{t}^{k}$ y $\tau_t$ son variables de control, las variables de estado $s_t$ y $m_{t}^{t}$ es una variable aleatoria. Adicionalmente, definimos la función de beneficio $g_t(x_t,\tau_t, m_t)$ y de transición de estado $f_t(x_t, s_{t-1},m_{t})$ como:
+%Luego notemos que $x_{t}^{k}$ y $\tau_t$ son variables de control, las variables de estado $s_t$ y $m_{t}^{t}$ es una variable aleatoria. Adicionalmente, definimos la función de beneficio $g_t(x_t,\tau_t, m_t)$ y de transición de estado $f_t(x_t, s_{t-1},m_{t})$ como:
 
 
-\[ g_t(x_t,\tau_t, m_t)  = \begin{cases} g_t^1(x_t,\tau_t,m_t) = \sum_{k=1}^{K}\left(- \frac{\alpha}{K}\tau_t +  \mathbb{E}\{a_{it}\} m_{t}^{k} x_{t}^{k}\right) & \text{Si la IF es con fines de lucro} \\ g_t^2(x_t,\tau_t, m_t) = \sum_{k=1}^{K}\left(- \frac{\alpha}{K}\tau_t +  m_{t}^{k} x_{t}^{k}\right) & \text{Si la IF es sin fines de lucro} \end{cases} \] 
+%\[ g_t(x_t,\tau_t, m_t)  = \begin{cases} g_t^1(x_t,\tau_t,m_t) = \sum_{k=1}^{K}\left(- \frac{\alpha}{K}\tau_t +  \mathbb{E}\{a_{it}\} m_{t}^{k} x_{t}^{k}\right) & \text{Si la IF es con fines de lucro} \\ g_t^2(x_t,\tau_t, m_t) = \sum_{k=1}^{K}\left(- \frac{\alpha}{K}\tau_t +  m_{t}^{k} x_{t}^{k}\right) & \text{Si la IF es sin fines de lucro} \end{cases} \] 
  
-$$f_t(x_t,s_{t-1},m_t)= s_{t-1} + \gamma_t - \displaystyle\sum_{k=1}^{K}\mathbb{E}\{a_{it}\} m_{t}^{k} x_{t}^{k}$$
+%$$f_t(x_t,s_{t-1},m_t)= s_{t-1} + \gamma_t - \displaystyle\sum_{k=1}^{K}\mathbb{E}\{a_{it}\} m_{t}^{k} x_{t}^{k}$$
 
-Definiendo el problema en términos de maximización del beneficio esperado
+%Definiendo el problema en términos de maximización del beneficio esperado
 
-$$ \begin{array}{r l l}
-	\displaystyle\max_{\vb{x}, \tau} & \mathbb{E} \left\lbrace \displaystyle\sum_{t=1}^{T} g_t(x_t,\tau_t, m_t) \right\rbrace &   									\\
-	\text{s.t.}&  s_{t} = f_t(x_t,s_{t-1},m_t)	& \forall t \in \{1,...,T\}		\\
-					&  s_{0} = B &                                                                                   	\\
-					& \tau_{t} = \displaystyle\sum_{k=1}^{K} x_{t}^{k}({pod_{t}^k - pod_{t}^{k-1}}) & \forall k \in \{1,...,K\}                 \\
+%$$ \begin{array}{r l l}
+	%\displaystyle\max_{\vb{x}, \tau} & \mathbb{E} \left\lbrace \displaystyle\sum_{t=1}^{T} g_t(x_t,\tau_t, m_t) \right\rbrace &   									\\
+	%\text{s.t.}&  s_{t} = f_t(x_t,s_{t-1},m_t)	& \forall t \in \{1,...,T\}		\\
+	%				&  s_{0} = B &                                                                                   	\\
+					%& \tau_{t} = \displaystyle\sum_{k=1}^{K} x_{t}^{k}({pod_{t}^k - pod_{t}^{k-1}}) & \forall k \in \{1,...,K\}                 \\
 					
-					& x_{t}^{k-1} \geq x_{t}^{k} & \forall t \in \{1,...,T\}  , \text{  } \forall k \in \{1,...,K\} \\
+					%& x_{t}^{k-1} \geq x_{t}^{k} & \forall t \in \{1,...,T\}  , \text{  } \forall k \in \{1,...,K\} \\
 					
-					& x_{t}^k \in \{0, 1\} & \forall t \in \{1,...,T\}  , \text{  } \forall k \in \{1,...,K\} \\                                      
-					& \tau_{t} \in \left[0,1 \right] , s_{t} \geq 0 & \forall t \in \{1,...,T\}                \\
+					%& x_{t}^k \in \{0, 1\} & \forall t \in \{1,...,T\}  , \text{  } \forall k \in \{1,...,K\} \\                                      
+					%& \tau_{t} \in \left[0,1 \right] , s_{t} \geq 0 & \forall t \in \{1,...,T\}                \\
 					
-\end{array} $$
+%\end{array} $$
 
 
 
